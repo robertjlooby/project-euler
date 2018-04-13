@@ -1,0 +1,46 @@
+defaults: &defaults
+  working_directory: ~/project-euler
+  docker:
+    - image: fpco/stack-build:lts-10.7
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-stack-cache-{{ checksum "stack.yaml" }}-{{ checksum "project-euler.cabal" }}
+      - run: stack setup
+      - run: stack build
+      - save_cache:
+          key: v1-stack-cache-{{ checksum "stack.yaml" }}-{{ checksum "project-euler.cabal" }}
+          paths:
+            - ~/.stack
+            - .stack-work
+  release:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-stack-cache-{{ checksum "stack.yaml" }}-{{ checksum "project-euler.cabal" }}
+      - run:
+          command: |
+            stack exec project-euler -- build
+            mv _site docs
+            git add docs
+            git commit -m"Add compiled site files"
+            git push --force git@github.com:robertjlooby/project-euler.git HEAD:refs/heads/master
+
+
+workflows:
+  version: 2
+  build-and-release:
+    jobs:
+      - build
+      - release:
+          requires:
+            - build
+          filters:
+            branches:
+              only: source
