@@ -13,7 +13,7 @@ jobs:
           key: v1-stack-cache-{{ checksum "stack.yaml" }}-{{ checksum "project-euler.cabal" }}
       - run: stack setup
       - run:
-          command: stack build
+          command: stack build -j1
           timeout: 6000
       - save_cache:
           key: v1-stack-cache-{{ checksum "stack.yaml" }}-{{ checksum "project-euler.cabal" }}
