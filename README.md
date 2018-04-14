@@ -8,5 +8,10 @@ Solutions to [Project Euler](https://projecteuler.net/) problems in Haskell
 1. `stack exec project-euler -- build`
 
 ### Executing problems
+
 1. `stack repl`
 1. `:load problems/problem-<number>.lhs`
+
+### Running tests
+
+1. `stack test`
