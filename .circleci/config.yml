@@ -31,6 +31,7 @@ jobs:
             stack exec project-euler -- build
             mv _site docs
             git add docs
+            git config --global user.email "CircleCI"
             git commit -m"Add compiled site files"
             git push --force git@github.com:robertjlooby/project-euler.git HEAD:refs/heads/master
 
