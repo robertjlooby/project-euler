@@ -1,2 +1,2 @@
 import Test.DocTest
-main = doctest ["problems/"]
+main = doctest ["lib/", "problems/"]
