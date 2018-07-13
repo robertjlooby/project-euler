@@ -13,15 +13,7 @@ What is the sum of the digits of the number `2^1000`?
 \begin{code}
 module Problem16 where
 
-sumOfDigits :: Integer -> Integer
-sumOfDigits = go 0
-  where
-    go sum n
-      | div' == 0 = sum + mod'
-      | otherwise = go (sum + mod') div'
-      where
-        (div', mod') = n `divMod` 10
-
+import NumberUtils (sumOfDigits)
 
 -- |
 -- >>> answer
